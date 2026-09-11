@@ -5,12 +5,13 @@ import type { PortfolioProject } from '@/lib/portfolio';
 
 export function ProjectCover({ project }: { project: PortfolioProject }) {
     const [imageFailed, setImageFailed] = useState(false);
+    const coverImage = project.images?.[0];
 
-    if (project.image && !imageFailed) {
+    if (coverImage && !imageFailed) {
         return (
             <img
                 className="pp-project-image"
-                src={project.image}
+                src={coverImage}
                 alt={`Captura de ${project.subtitle}`}
                 loading="lazy"
                 width={1280}

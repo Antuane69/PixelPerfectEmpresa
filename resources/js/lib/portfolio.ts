@@ -6,7 +6,7 @@ export type PortfolioProject = {
     description: string;
     tags: string[];
     status: string;
-    image?: string;
+    images?: string[];
     url?: string;
     preview: 'hotel' | 'restaurant' | 'sports' | 'brand';
     note: string;
@@ -22,7 +22,7 @@ export const projects: PortfolioProject[] = [
             'Desarrollo de aplicaciones para Buenaventura Grand, Villa Premiere y Hacienda Buenaventura. Incluye el portal de control de documentos de cuentas por pagar y sistemas que funcionan dentro de los hoteles.',
         tags: ['Hotelería', 'Aplicaciones web'],
         status: 'Portal público + sistemas internos',
-        image: '/images/projects/buenaventura.png',
+        images: ['/images/projects/buenaventura.png'],
         url: 'https://cxp.buenaventurahoteles.com/',
         preview: 'hotel',
         note: 'La captura muestra el portal público. Las aplicaciones internas se presentarán con imágenes adicionales.',
@@ -36,7 +36,7 @@ export const projects: PortfolioProject[] = [
             'Un sitio para descubrir el Hotel Mesón de Mita: habitaciones, servicios, promociones y una experiencia frente al mar en Punta de Mita.',
         tags: ['Hotelería', 'Sitio web'],
         status: 'Sitio público',
-        image: '/images/projects/meson-de-mita.png',
+        images: ['/images/projects/meson-de-mita.png'],
         url: 'https://hotelmesondemita.com/',
         preview: 'hotel',
         note: 'Captura del sitio público de Hotel Mesón de Mita.',
@@ -84,12 +84,28 @@ export const companies = [
         name: 'Grupo Hotelero Buenaventura',
         sector: 'Hotelería',
         project: 'buenaventura',
+        mark: 'HB',
+        tone: 'navy',
     },
-    { name: 'Mesón de Mita', sector: 'Hotelería', project: 'meson-de-mita' },
+    {
+        name: 'Mesón de Mita',
+        sector: 'Hotelería',
+        project: 'meson-de-mita',
+        mark: 'MM',
+        tone: 'sunset',
+    },
     {
         name: 'Little Tokyo',
         sector: 'Restaurantes',
         project: 'little-tokyo',
+        mark: 'LT',
+        tone: 'sakura',
     },
-    { name: 'Strataz', sector: 'Startup deportiva', project: 'strataz' },
+    {
+        name: 'Strataz',
+        sector: 'Startup deportiva',
+        project: 'strataz',
+        mark: 'S',
+        tone: 'violet',
+    },
 ];
