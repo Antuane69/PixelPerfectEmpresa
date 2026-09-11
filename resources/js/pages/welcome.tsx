@@ -35,7 +35,7 @@ const emailHref = `mailto:pixelperfect.nacif@gmail.com?subject=${encodeURICompon
 const navigation = [
     ['Servicios', '#servicios'],
     ['Proyectos', '#proyectos'],
-    ['Empresas', '#empresas'],
+    ['Clientes', '#empresas'],
     ['Contacto', '#contacto'],
 ];
 const services = [
@@ -43,15 +43,15 @@ const services = [
         icon: Code2,
         title: 'Aplicaciones a la medida',
         description:
-            'Herramientas que se adaptan a tu negocio: desde la primera idea hasta el sistema que usas todos los días.',
-        detail: 'Aplicaciones web · Sistemas internos',
+            'Herramientas que se adaptan a las necesidades de tu negocio; no al revés. Completamente modular, solo obtienes lo que necesitas y puedes escalar a medida que tu negocio crece.',
+        detail: 'Páginas web · Para todos los dispositivos',
         color: 'lime',
     },
     {
         icon: Blocks,
-        title: 'Tu operación, conectada',
+        title: 'Tu negocio, centralizado',
         description:
-            'Organiza procesos, centraliza información y dale a tu equipo más tiempo para lo que sí importa.',
+            'Organiza y automatiza procesos, centraliza tu información, revisa estadisticas claves y reportes a la medida y dale a tu equipo más tiempo para lo que sí importa.',
         detail: 'Gestión · Automatización · Integraciones',
         color: 'purple',
     },
@@ -59,8 +59,8 @@ const services = [
         icon: Palette,
         title: 'Diseño con intención',
         description:
-            'Interfaces claras, sitios que comunican y experiencias que se sienten tan bien como se ven.',
-        detail: 'Diseño de interfaces · Sitios web',
+            'Interfaces claras y experiencias que se sienten tan bien como se ven. Con oportunidad de mejorar la percepción de tu marca y la experiencia de tus clientes.',
+        detail: 'Diseño enfocado en la experiencia del usuario',
         color: 'peach',
     },
 ];
@@ -165,30 +165,21 @@ export default function Welcome() {
                         <div className="pp-container relative grid items-center gap-16 lg:grid-cols-[1.05fr_1fr] lg:gap-12">
                             <div>
                                 <p className="pp-eyebrow">
-                                    <span className="pp-status-dot" /> Estudio
-                                    de desarrollo & diseño · México
+                                    <span className="pp-status-dot" /> Empresa de desarrollo y diseño de software
                                 </p>
                                 <h1>
-                                    Tu negocio.
+                                    Da el siguiente
                                     <br />
-                                    Tu siguiente
+                                    gran paso
                                     <br />
-                                    <em>gran paso.</em>
-                                    <span
-                                        className="pp-title-dot"
-                                        aria-hidden="true"
-                                    >
-                                        *
-                                    </span>
+                                    <em>en tu negocio.</em>
                                 </h1>
                                 <p className="pp-intro">
-                                    Creamos aplicaciones que simplifican tu
-                                    trabajo y diseños que hacen destacar tu
-                                    marca. A tu medida, de principio a fin.
+                                  Nos enfocamos en desarrollar sistemas y plataformas que ayudan a tu negocio a crecer y a destacar. <em>A tu medida, de principio a fin.</em>
                                 </p>
                                 <div className="mt-8 flex flex-wrap items-center gap-5">
                                     <a href="#proyectos" className="pp-button">
-                                        Explorar nuestro trabajo{' '}
+                                        Nuestro trabajo{' '}
                                         <ArrowUpRight
                                             size={18}
                                             aria-hidden="true"
@@ -198,7 +189,7 @@ export default function Welcome() {
                                         href="#contacto"
                                         className="pp-text-link"
                                     >
-                                        Tengo una idea{' '}
+                                        Contacto{' '}
                                         <ArrowRight
                                             size={17}
                                             aria-hidden="true"
@@ -206,8 +197,9 @@ export default function Welcome() {
                                     </a>
                                 </div>
                                 <p className="pp-hero-note">
-                                    <span /> Desarrollo a medida <span />{' '}
-                                    Cuidado en cada detalle
+                                    <span /> Optimización de búsqueda en Google
+                                    <span /> Desarrollo a tu medida
+                                    <span /> Diseño responsivo para tabletas, celulares y computadoras 
                                 </p>
                             </div>
                             <div className="pp-hero-visual">
@@ -233,21 +225,7 @@ export default function Welcome() {
                                         aria-hidden="true"
                                     />
                                 </div>
-                                <p className="pp-preview-caption">
-                                    Una mirada a nuestro sistema · Vista
-                                    ilustrativa
-                                </p>
                             </div>
-                        </div>
-                        <div className="pp-container pp-hero-bottom">
-                            <span>Buenas ideas. Mejor ejecución.</span>
-                            <a
-                                href="#servicios"
-                                aria-label="Descubrir nuestros servicios"
-                            >
-                                <ArrowDown size={17} aria-hidden="true" />
-                            </a>
-                            <span>Hecho en México, píxel a píxel.</span>
                         </div>
                     </section>
                     <section className="pp-container pp-section" id="servicios">
@@ -257,17 +235,15 @@ export default function Welcome() {
                                     01 / Lo que hacemos
                                 </p>
                                 <h2>
-                                    Menos complicaciones.
+                                    Optimiza tus procesos.
                                     <br />
-                                    <em>Más posibilidades.</em>
+                                    <em>Más tiempo para lo que verdaderamente importa.</em>
                                 </h2>
                             </div>
-                            <p>
-                                La tecnología debe ayudarte a avanzar.
-                                <br />
-                                Nos encargamos de que así sea.
-                            </p>
                         </div>
+                        <p style={{ marginBottom: '20px' }}>
+                            La tecnología debe ayudarte a avanzar. Nuestro principal objetivo es que tu negocio optimize sus procesos y desarrolle herramientas que eviten trabajo repetitivo.
+                        </p>
                         <div className="grid gap-4 md:grid-cols-3">
                             {services.map((service, index) => (
                                 <article
@@ -304,16 +280,10 @@ export default function Welcome() {
                                         02 / Nuestro trabajo
                                     </p>
                                     <h2>
-                                        De la idea
-                                        <br />
+                                        De la idea {" "}
                                         <em>a la pantalla.</em>
                                     </h2>
                                 </div>
-                                <p>
-                                    Aplicaciones y diseño con el mismo objetivo:
-                                    <br />
-                                    hacer que las cosas funcionen mejor.
-                                </p>
                             </div>
                             <div
                                 className="mb-8 flex flex-wrap gap-2"
@@ -455,15 +425,13 @@ export default function Welcome() {
                     >
                         <div>
                             <p className="pp-eyebrow">
-                                03 / Empresas & colaboraciones
+                                03 / Empresas que han confiado en nosotros
                             </p>
-                            <h2>
-                                El mejor trabajo
-                                <br />
-                                se hace <em>en equipo.</em>
+                            <h2>                                
+                                Clientes
                             </h2>
                             <p className="pp-companies-intro">
-                                Detrás de cada proyecto hay personas, ideas y un
+                                Detrás de cada proyecto realizado hay un equipo, ideas y un
                                 negocio que quiere llegar más lejos.
                             </p>
                         </div>
@@ -499,7 +467,7 @@ export default function Welcome() {
                                     </h2>
                                     <p>
                                         Cuéntanos qué necesitas. El primer paso
-                                        es una buena conversación.
+                                        es una buena conversación, nuestro equipo te escuchará y te ayudará a definir la mejor solución para tu negocio.
                                     </p>
                                 </div>
                                 <div className="pp-contact-actions">
@@ -538,8 +506,7 @@ export default function Welcome() {
                         <Wordmark />
                     </a>
                     <p>
-                        © {new Date().getFullYear()} PixelPerfect. Hecho con
-                        intención en México.
+                        © {new Date().getFullYear()} PixelPerfect.
                     </p>
                     <a href="#inicio" className="pp-text-link">
                         Volver arriba{' '}

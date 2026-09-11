@@ -142,12 +142,13 @@
 }
 .pp-hero h1 em,
 .pp-section h2 em,
+.pp-intro em,
 .pp-contact h2 em {
     font-family: Georgia, serif;
     font-weight: 500;
     color: var(--pp-purple);
-    letter-spacing: -0.065em;
 }
+
 .pp-title-dot {
     display: inline-block;
     color: var(--pp-purple);
@@ -317,7 +318,7 @@
     justify-content: space-between;
     align-items: end;
     gap: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 .pp-section h2 {
     margin-top: 18px;

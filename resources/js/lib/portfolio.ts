@@ -81,25 +81,15 @@ export const projects: PortfolioProject[] = [
 
 export const companies = [
     {
-        name: 'Buenaventura Grand',
-        sector: 'Grupo Buenaventura',
-        project: 'buenaventura',
-    },
-    {
-        name: 'Villa Premiere',
-        sector: 'Grupo Buenaventura',
-        project: 'buenaventura',
-    },
-    {
-        name: 'Hacienda Buenaventura',
-        sector: 'Grupo Buenaventura',
+        name: 'Grupo Hotelero Buenaventura',
+        sector: 'Hotelería',
         project: 'buenaventura',
     },
     { name: 'Mesón de Mita', sector: 'Hotelería', project: 'meson-de-mita' },
     {
         name: 'Little Tokyo',
-        sector: 'Restaurantes · Guadalajara',
+        sector: 'Restaurantes',
         project: 'little-tokyo',
     },
-    { name: 'Strataz', sector: 'Tecnología deportiva', project: 'strataz' },
+    { name: 'Strataz', sector: 'Startup deportiva', project: 'strataz' },
 ];
