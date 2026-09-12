@@ -58,7 +58,7 @@
 
 .ppe-hero {
     position: relative;
-    padding: 70px 0 100px;
+    padding: 56px 0 64px;
     overflow: hidden;
     background:
         radial-gradient(circle at 90% 5%, #c084fc2b, transparent 30%),
@@ -1201,7 +1201,7 @@
 }
 
 .ppe-support {
-    padding: 80px 0;
+    padding: 64px 0;
     border-block: 1px solid var(--pp-line);
     background: transparent;
 }
@@ -1268,7 +1268,7 @@
 }
 
 .ppe-final-cta {
-    padding: 100px 0;
+    padding: 64px 0;
     background:
         radial-gradient(circle at 50% 0%, #9f54d537, transparent 40%),
         var(--ppe-deep);
@@ -1378,7 +1378,11 @@
     }
 
     .ppe-workflow-card {
-        min-height: 390px;
+        min-height: 0;
+    }
+
+    .ppe-workflow-card ul {
+        margin-top: 24px;
     }
 
     .ppe-steps-heading {
@@ -1400,15 +1404,28 @@
 
 @media (max-width: 639px) {
     .ppe-hero {
-        padding: 45px 0 70px;
+        padding: 32px 0 40px;
     }
 
     .ppe-hero h1 {
-        font-size: clamp(3.45rem, 16vw, 4.8rem);
+        font-size: clamp(2.7rem, 13vw, 4.8rem);
     }
 
     .ppe-product-pill > span:last-child {
         display: none;
+    }
+
+    .ppe-hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+    }
+
+    .ppe-hero-copy {
+        min-width: 0;
+    }
+
+    .ppe-dashboard-heading {
+        flex-wrap: wrap;
     }
 
     .ppe-hero-visual {
@@ -1477,7 +1494,7 @@
 
     .ppe-section-intro h2,
     .ppe-subscription-copy h2 {
-        font-size: 2.55rem;
+        font-size: clamp(2rem, 8.5vw, 2.55rem);
     }
 
     .ppe-employee-feature {
@@ -1510,7 +1527,7 @@
     }
 
     .ppe-workflow-card {
-        min-height: 420px;
+        min-height: 0;
         padding: 24px;
     }
 
@@ -1537,15 +1554,15 @@
     }
 
     .ppe-support {
-        padding: 60px 0;
+        padding: 40px 0;
     }
 
     .ppe-final-cta {
-        padding: 75px 0;
+        padding: 48px 0;
     }
 
     .ppe-final-cta h2 {
-        font-size: 3.35rem;
+        font-size: clamp(2.25rem, 10vw, 3.35rem);
     }
 
     .ppe-final-email {

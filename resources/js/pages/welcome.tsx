@@ -368,7 +368,7 @@ export default function Welcome() {
                     </a>
                     <nav
                         aria-label="Navegación principal"
-                        className="hidden items-center gap-7 text-sm md:flex"
+                        className="hidden items-center gap-7 text-sm lg:flex"
                     >
                         {navigation.map(([label, href]) => (
                             <a key={href} className="pp-nav-link" href={href}>
@@ -385,7 +385,7 @@ export default function Welcome() {
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="md:hidden"
+                        className="lg:hidden"
                         aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
                         aria-expanded={menuOpen}
                         aria-controls="mobile-navigation"
@@ -401,7 +401,7 @@ export default function Welcome() {
                         <nav
                             id="mobile-navigation"
                             aria-label="Navegación móvil"
-                            className="pp-mobile-nav md:hidden"
+                            className="pp-mobile-nav lg:hidden"
                         >
                             {navigation.map(([label, href]) => (
                                 <a
@@ -421,7 +421,7 @@ export default function Welcome() {
                 </header>
                 <main id="contenido">
                     <section className="pp-hero">
-                        <div className="pp-container relative grid items-center gap-16 lg:grid-cols-[1.05fr_1fr] lg:gap-12">
+                        <div className="pp-container relative grid items-center gap-10 sm:gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-12">
                             <div>
                                 <p className="pp-eyebrow">
                                     <span className="pp-status-dot" /> Empresa
@@ -514,7 +514,7 @@ export default function Welcome() {
                             procesos y desarrolle herramientas que eviten
                             trabajo repetitivo.
                         </p>
-                        <div className="grid gap-4 md:grid-cols-3">
+                        <div className="grid gap-4 lg:grid-cols-3">
                             {services.map((service, index) => (
                                 <article
                                     key={service.title}
