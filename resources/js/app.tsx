@@ -9,11 +9,17 @@ import SettingsLayout from '@/layouts/settings/layout';
 const appName = 'PixelPerfect';
 
 void createInertiaApp({
-    title: (title) => (title ? `${title} - ${appName}` : appName),
+    title: (title) =>
+        title?.includes('Restaurante Pixel Perfect')
+            ? title
+            : title
+              ? `${title} - ${appName}`
+              : appName,
     layout: (name) => {
         switch (true) {
-            case ['welcome', 'empresarial'].includes(name) ||
-                name.startsWith('errors/'):
+            case ['welcome', 'empresarial', 'templates', 'restaurant'].includes(
+                name,
+            ) || name.startsWith('errors/'):
                 return null;
             case name.startsWith('auth/'):
                 return AuthLayout;

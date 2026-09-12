@@ -23,7 +23,7 @@ export function SiteFooter() {
                             Pixel Perfect
                         </p>
                         <p className="text-muted-foreground text-[11px] leading-4">
-                            Copyright © 2024 - {currentYear} PixelPerfect. Todos
+                            Copyright © 2022 - {currentYear} PixelPerfect. Todos
                             los derechos reservados.
                         </p>
                         <p className="text-muted-foreground text-[11px] leading-4">

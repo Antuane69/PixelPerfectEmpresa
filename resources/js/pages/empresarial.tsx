@@ -31,6 +31,7 @@ import {
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { SiteFooter } from '@/components/site-footer';
+import { SeoHead } from '@/components/seo-head';
 import { home } from '@/routes';
 import '../../css/welcome.css';
 import '../../css/empresarial.css';
@@ -268,12 +269,8 @@ export default function Empresarial() {
 
     return (
         <>
-            <Head title="Pixel Perfect Empresarial">
-                <meta
-                    head-key="description"
-                    name="description"
-                    content="Pixel Perfect Empresarial centraliza empleados, documentos, firmas, vacaciones, horarios, inventarios y estadísticas en un sistema modular para tu negocio."
-                />
+            <SeoHead />
+            <Head>
                 <meta name="theme-color" content="#211d29" />
             </Head>
             <div className="pp-site ppe-site" id="inicio" lang="es">
@@ -366,10 +363,10 @@ export default function Empresarial() {
                                     <em>mejor conectada.</em>
                                 </h1>
                                 <p>
-                                    Empleados, documentación, contratos, solicitudes, horarios
-                                    e inventarios en un mismo sistema.
-                                    Configurado alrededor de la forma en que
-                                    realmente trabaja tu negocio.
+                                    Un sistema de gestión y administración para tu
+                                    empresa: empleados, documentos, contratos,
+                                    vacaciones, horarios e inventarios en un solo
+                                    lugar. Configurado a la medida de tu negocio.
                                 </p>
                                 <div className="ppe-hero-actions">
                                     <a
@@ -852,8 +849,10 @@ export default function Empresarial() {
                                 <em>Una empresa más clara.</em>
                             </h2>
                             <p>
-                                Cuéntanos cómo trabaja tu negocio y te ayudamos
-                                a elegir el punto de partida.
+                                Atendemos negocios en todo México, incluidos
+                                Guadalajara y Puerto Vallarta. Cuéntanos cómo
+                                trabaja tu empresa y
+                                te ayudamos a elegir tus módulos.
                             </p>
                             <div>
                                 <a

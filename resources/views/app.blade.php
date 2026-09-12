@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
+@php($seo = $page['props']['seo'] ?? null)
+<html lang="{{ $seo ? 'es-MX' : str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,7 +40,20 @@
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
         <x-inertia::head>
-            <title>{{ config('app.name', 'Laravel') }}</title>
+            @if ($seo)
+                <title>{{ $seo['title'] }} - {{ config('seo.name') }}</title>
+                <link data-inertia="canonical" rel="canonical" href="{{ $seo['canonical'] }}">
+                @foreach ($seo['meta'] as $key => $content)
+                    @if (str_starts_with($key, 'og:'))
+                        <meta data-inertia="{{ $key }}" property="{{ $key }}" content="{{ $content }}">
+                    @else
+                        <meta data-inertia="{{ $key }}" name="{{ $key }}" content="{{ $content }}">
+                    @endif
+                @endforeach
+                <script data-inertia="structured-data" type="application/ld+json">{!! $seo['structuredData'] !!}</script>
+            @else
+                <title>{{ config('app.name', 'Laravel') }}</title>
+            @endif
         </x-inertia::head>
     </head>
     <body class="font-sans antialiased">

@@ -23,9 +23,11 @@ import { useEffect, useState } from 'react';
 import { PortfolioPreview } from '@/components/portfolio-preview';
 import { ProjectCover } from '@/components/project-cover';
 import { ProjectGallery } from '@/components/project-gallery';
+import { MarketingWordmark } from '@/components/marketing-wordmark';
 import { SiteFooter } from '@/components/site-footer';
+import { SeoHead } from '@/components/seo-head';
 import { companies, projects } from '@/lib/portfolio';
-import { empresarial } from '@/routes';
+import { empresarial, templates } from '@/routes';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -49,38 +51,29 @@ const navigation = [
 const services = [
     {
         icon: Code2,
-        title: 'Aplicaciones a la medida',
+        title: 'Diseño y creación de páginas web',
         description:
-            'Herramientas que se adaptan a las necesidades de tu negocio; no al revés. Completamente modular, solo obtienes lo que necesitas y puedes escalar a medida que tu negocio crece.',
+            'Creamos páginas web para presentar tu negocio, mostrar tus servicios y facilitar que tus clientes te contacten. Diseño adaptable a celulares, tabletas y computadoras.',
         detail: 'Páginas web · Para todos los dispositivos',
         color: 'lime',
     },
     {
         icon: Blocks,
-        title: 'Información centralizada',
+        title: 'Sistemas de gestión para negocios',
         description:
-            'Organiza y automatiza procesos, centraliza tu información, revisa estadísticas clave y reportes a la medida y dale a tu equipo más tiempo para lo que sí importa.',
+            'Desarrollamos sistemas de administración de empresas para centralizar información, automatizar procesos y consultar estadísticas y reportes. Herramientas que crecen con tu negocio.',
         detail: 'Gestión · Automatización · Integraciones',
         color: 'purple',
     },
     {
         icon: Palette,
-        title: 'Diseño con intención',
+        title: 'Programación y diseño a la medida',
         description:
-            'Interfaces claras y experiencias que se sienten tan bien como se ven. Con oportunidad de mejorar la percepción de tu marca y la experiencia de tus clientes.',
+            'Trabaja con un equipo de programadores que entiende tu operación. Desarrollamos aplicaciones e interfaces claras para resolver necesidades concretas de tu empresa.',
         detail: 'Diseño enfocado en la experiencia del usuario',
         color: 'peach',
     },
 ];
-
-function Wordmark() {
-    return (
-        <span className="pp-wordmark">
-            <span>PIXEL</span>
-            <em>PERFECT</em>
-        </span>
-    );
-}
 
 function CompaniesCarousel() {
     const [activeCompany, setActiveCompany] = useState(0);
@@ -343,12 +336,8 @@ export default function Welcome() {
 
     return (
         <>
-            <Head title="Aplicaciones para negocios">
-                <meta
-                    head-key="description"
-                    name="description"
-                    content="PixelPerfect: desarrollo de aplicaciones a la medida, sistemas para empresas y diseño web en México. Conoce nuestro trabajo y cuéntanos tu idea."
-                />
+            <SeoHead />
+            <Head>
                 <meta name="theme-color" content="#f8f6f2" />
             </Head>
             <div className="pp-site" id="inicio" lang="es">
@@ -364,7 +353,7 @@ export default function Welcome() {
                         <span className="pp-logo-icon">
                             <Sparkles size={17} aria-hidden="true" />
                         </span>
-                        <Wordmark />
+                        <MarketingWordmark />
                     </a>
                     <nav
                         aria-label="Navegación principal"
@@ -375,6 +364,9 @@ export default function Welcome() {
                                 {label}
                             </a>
                         ))}
+                        <Link className="pp-nav-link" href={templates()}>
+                            Plantillas
+                        </Link>
                     </nav>
                     <a
                         href="#contacto"
@@ -416,6 +408,13 @@ export default function Welcome() {
                                     />
                                 </a>
                             ))}
+                            <Link
+                                href={templates()}
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                Plantillas
+                                <ArrowUpRight size={16} aria-hidden="true" />
+                            </Link>
                         </nav>
                     )}
                 </header>
@@ -424,8 +423,8 @@ export default function Welcome() {
                         <div className="pp-container relative grid items-center gap-10 sm:gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-12">
                             <div>
                                 <p className="pp-eyebrow">
-                                    <span className="pp-status-dot" /> Empresa
-                                    de desarrollo y diseño de software
+                                    <span className="pp-status-dot" /> Diseño
+                                    web para negocios de todo México
                                 </p>
                                 <h1>
                                     Da el siguiente
@@ -435,9 +434,10 @@ export default function Welcome() {
                                     <em>en tu negocio.</em>
                                 </h1>
                                 <p className="pp-intro">
-                                    Nos enfocamos en desarrollar sistemas y
-                                    plataformas que ayudan a tu negocio a crecer
-                                    y a destacar.{' '}
+                                    Creamos páginas web y sistemas para negocios
+                                    de todo México, incluidos Guadalajara y
+                                    Puerto Vallarta. Diseño y desarrollo de
+                                    software para crecer y destacar.{' '}
                                     <em>A tu medida, de principio a fin.</em>
                                 </p>
                                 <div className="mt-8 flex flex-wrap items-center gap-5">
@@ -499,11 +499,10 @@ export default function Welcome() {
                                     01 / Lo que hacemos
                                 </p>
                                 <h2>
-                                    Optimiza tus procesos.
+                                    Páginas web y sistemas.
                                     <br />
                                     <em>
-                                        Más tiempo para lo que verdaderamente
-                                        importa.
+                                        Diseñados para hacer crecer tu negocio.
                                     </em>
                                 </h2>
                             </div>
@@ -595,7 +594,7 @@ export default function Welcome() {
                                     className="pp-button pp-button-lime"
                                     viewTransition
                                 >
-                                    Conocer Pixel Perfect Empresarial
+                                    Conocer nuestro sistema de gestión
                                     <ArrowUpRight
                                         size={18}
                                         aria-hidden="true"
