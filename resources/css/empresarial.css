@@ -122,9 +122,9 @@
 .ppe-hero h1 em,
 .ppe-site .ppe-section-intro h2 em,
 .ppe-final-cta h2 em {
-    color: #d8b4fe;
+    color: #bc97e3;
     font-family: Georgia, serif;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .ppe-hero-copy > p {
@@ -522,7 +522,7 @@
 
 .ppe-overview {
     border-bottom: 1px solid var(--pp-line);
-    background: #f1edf3;
+    background: transparent;
 }
 
 .ppe-overview-grid {
@@ -873,7 +873,7 @@
 
 .ppe-workflows {
     border-block: 1px solid var(--pp-line);
-    background: #efebf1;
+    background: transparent;
 }
 
 .ppe-workflow-grid {
@@ -1203,7 +1203,7 @@
 .ppe-support {
     padding: 80px 0;
     border-block: 1px solid var(--pp-line);
-    background: #efebf1;
+    background: transparent;
 }
 
 .ppe-support-grid {
@@ -1576,7 +1576,7 @@
 .dark .ppe-site .ppe-overview,
 .dark .ppe-site .ppe-workflows,
 .dark .ppe-site .ppe-support {
-    background: #201a27;
+    background: transparent;
 }
 
 .dark .ppe-site .ppe-employee-feature,

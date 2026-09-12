@@ -141,3 +141,48 @@
         @apply bg-background text-foreground;
     }
 }
+
+.auth-page-background {
+    background-color: #f8f6f2;
+    background-image:
+        radial-gradient(
+            circle 17rem at calc(100% + 8rem) -4rem,
+            #e9d5ffb3,
+            transparent
+        ),
+        radial-gradient(circle 14rem at -12rem 28rem, #d9f99d99, transparent),
+        linear-gradient(to right, rgba(33, 29, 41, 0.036) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(33, 29, 41, 0.036) 1px, transparent 1px);
+    background-size:
+        auto,
+        auto,
+        4rem 4rem,
+        4rem 4rem;
+    background-attachment: fixed;
+}
+
+.dark .auth-page-background {
+    background-color: #17131c;
+    background-image:
+        radial-gradient(
+            circle 17rem at calc(100% + 8rem) -4rem,
+            #7e22ce45,
+            transparent
+        ),
+        radial-gradient(circle 14rem at -12rem 28rem, #65a30d20, transparent),
+        linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.012) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.012) 1px,
+            transparent 1px
+        );
+    background-size:
+        auto,
+        auto,
+        4rem 4rem,
+        4rem 4rem;
+}

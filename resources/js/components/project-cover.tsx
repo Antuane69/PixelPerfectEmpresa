@@ -12,7 +12,7 @@ export function ProjectCover({ project }: { project: PortfolioProject }) {
             <img
                 className="pp-project-image"
                 src={coverImage}
-                alt={`Captura de ${project.subtitle}`}
+                alt={`${project.imageType} de ${project.subtitle}`}
                 loading="lazy"
                 width={1280}
                 height={720}

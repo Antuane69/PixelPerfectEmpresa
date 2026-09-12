@@ -30,6 +30,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { SiteFooter } from '@/components/site-footer';
 import { home } from '@/routes';
 import '../../css/welcome.css';
 import '../../css/empresarial.css';
@@ -83,7 +84,7 @@ const workflowModules = [
     {
         icon: Boxes,
         number: '04',
-        title: 'Uniformes y herramientas',
+        title: 'Uniformes e inventarios',
         description:
             'Inventarios visuales para controlar lo que entra, lo que sale y a quién se entrega.',
         points: [
@@ -365,7 +366,7 @@ export default function Empresarial() {
                                     <em>mejor conectada.</em>
                                 </h1>
                                 <p>
-                                    Personas, documentos, solicitudes, horarios
+                                    Empleados, documentación, contratos, solicitudes, horarios
                                     e inventarios en un mismo sistema.
                                     Configurado alrededor de la forma en que
                                     realmente trabaja tu negocio.
@@ -377,7 +378,7 @@ export default function Empresarial() {
                                         rel="noreferrer"
                                         className="pp-button pp-button-lime"
                                     >
-                                        Conocer el sistema
+                                        Más información
                                         <ArrowUpRight
                                             size={18}
                                             aria-hidden="true"
@@ -439,7 +440,7 @@ export default function Empresarial() {
                         </div>
                     </section>
 
-                    <section
+                    {/* <section
                         className="ppe-overview"
                         aria-label="Áreas del sistema"
                     >
@@ -451,7 +452,7 @@ export default function Empresarial() {
                                 </div>
                             ))}
                         </div>
-                    </section>
+                    </section> */}
 
                     <section className="pp-container pp-section" id="modulos">
                         <div className="ppe-section-intro">
@@ -460,29 +461,24 @@ export default function Empresarial() {
                                     01 / El centro de tu operación
                                 </p>
                                 <h2>
-                                    Un expediente completo.
-                                    <br />
-                                    <em>Documentos que trabajan contigo.</em>
+                                    Mantén tus <em>expedientes</em> completos.
                                 </h2>
                             </div>
-                            <p>
-                                Mantén la información laboral al día y convierte
-                                documentos repetitivos en procesos ágiles,
-                                claros y fáciles de revisar.
-                            </p>
                         </div>
+                        <p style={{ margin: "10px 0px" }}>
+                            Mantén la información laboral al día y convierte
+                            documentos repetitivos en procesos ágiles,
+                            claros y fáciles de revisar.
+                        </p>
 
                         <div className="ppe-employee-feature">
                             <div className="ppe-employee-copy">
                                 <span className="ppe-module-number">
                                     MÓDULO 01
                                 </span>
-                                <span className="ppe-feature-icon">
-                                    <UsersRound size={24} />
-                                </span>
                                 <h3>Administración de empleados</h3>
                                 <p>
-                                    Centraliza información personal y de la
+                                    Centraliza la información personal y de la
                                     vacante, salario, vacaciones, contratos y
                                     toda la documentación de cada colaborador.
                                 </p>
@@ -499,6 +495,9 @@ export default function Empresarial() {
                                     <li>
                                         <Check size={16} /> Revisión y
                                         seguimiento desde un solo perfil
+                                    </li>
+                                    <li>
+                                        <Check size={16} /> Contratos configurables y firmables digitalmente
                                     </li>
                                     <li>
                                         <Check size={16} /> Alertas por correo
@@ -621,15 +620,15 @@ export default function Empresarial() {
                                     <h2>
                                         Menos mensajes sueltos.
                                         <br />
-                                        <em>Más decisiones visibles.</em>
+                                        <b><em>Más decisiones visibles.</em></b>
                                     </h2>
                                 </div>
-                                <p>
-                                    Cada solicitud llega a quien debe decidir,
-                                    con el contexto necesario y un estatus que
-                                    todos pueden consultar.
-                                </p>
                             </div>
+                            <p style={{ margin: "10px 0px" }}>
+                                Cada solicitud llega a quien debe decidir,
+                                con el contexto necesario y un estatus que
+                                todos pueden consultar.
+                            </p>
                             <div className="ppe-workflow-grid">
                                 {workflowModules.map((module) => (
                                     <article
@@ -667,7 +666,7 @@ export default function Empresarial() {
                                 <h2>
                                     La información que necesitas,
                                     <br />
-                                    <em>cuando la necesitas.</em>
+                                    <b><em>cuando la necesitas.</em></b>
                                 </h2>
                             </div>
                         </div>
@@ -817,9 +816,6 @@ export default function Empresarial() {
                     <section className="ppe-support" id="soporte">
                         <div className="pp-container ppe-support-grid">
                             <div>
-                                <span className="ppe-support-icon">
-                                    <Headphones size={29} />
-                                </span>
                                 <p className="pp-eyebrow">
                                     05 / Soporte directo
                                 </p>
@@ -881,16 +877,7 @@ export default function Empresarial() {
                     </section>
                 </main>
 
-                <footer className="pp-container pp-footer">
-                    <Link href={home()} aria-label="Volver a PixelPerfect">
-                        <Wordmark />
-                    </Link>
-                    <p>© {new Date().getFullYear()} PixelPerfect.</p>
-                    <Link href={home()} className="pp-text-link">
-                        <ArrowLeft size={16} aria-hidden="true" /> Volver al
-                        sitio principal
-                    </Link>
-                </footer>
+                <SiteFooter />
             </div>
         </>
     );

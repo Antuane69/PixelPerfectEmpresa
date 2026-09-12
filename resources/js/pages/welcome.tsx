@@ -19,10 +19,11 @@ import {
     Sparkles,
     X,
 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PortfolioPreview } from '@/components/portfolio-preview';
 import { ProjectCover } from '@/components/project-cover';
 import { ProjectGallery } from '@/components/project-gallery';
+import { SiteFooter } from '@/components/site-footer';
 import { companies, projects } from '@/lib/portfolio';
 import { empresarial } from '@/routes';
 import { Button } from '@/components/ui/button';
@@ -42,10 +43,8 @@ const whatsappHref = `https://wa.me/523221974630?text=${encodeURIComponent(messa
 const emailHref = `mailto:pixelperfect.nacif@gmail.com?subject=${encodeURIComponent('Tengo un proyecto en mente')}&body=${encodeURIComponent(message)}`;
 const navigation = [
     ['Servicios', '#servicios'],
-    ['Empresarial', '#pixel-perfect-empresarial'],
-    ['Proyectos', '#proyectos'],
-    ['Clientes', '#empresas'],
-    ['Contacto', '#contacto'],
+    ['Clientes', '#clientes'],
+    ['Pixel Perfect Empresarial', '#pixel-perfect-empresarial'],
 ];
 const services = [
     {
@@ -58,9 +57,9 @@ const services = [
     },
     {
         icon: Blocks,
-        title: 'Tu negocio, centralizado',
+        title: 'Información centralizada',
         description:
-            'Organiza y automatiza procesos, centraliza tu información, revisa estadisticas claves y reportes a la medida y dale a tu equipo más tiempo para lo que sí importa.',
+            'Organiza y automatiza procesos, centraliza tu información, revisa estadísticas clave y reportes a la medida y dale a tu equipo más tiempo para lo que sí importa.',
         detail: 'Gestión · Automatización · Integraciones',
         color: 'purple',
     },
@@ -83,196 +82,255 @@ function Wordmark() {
     );
 }
 
-function CompaniesCarousel({
-    onCompanySelect,
-}: {
-    onCompanySelect: () => void;
-}) {
-    const carouselRef = useRef<HTMLDivElement>(null);
+function CompaniesCarousel() {
     const [activeCompany, setActiveCompany] = useState(0);
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+    const [isHovering, setIsHovering] = useState(false);
+    const [isProjectDialogOpen, setIsProjectDialogOpen] = useState(false);
+    const [isImagePreviewOpen, setIsImagePreviewOpen] = useState(false);
+    const selectedCompany = companies[activeCompany] ?? companies[0];
+    const selectedProject =
+        projects.find((project) => project.id === selectedCompany.project) ??
+        projects[0];
 
-    const scrollToCompany = (index: number) => {
+    const selectCompany = (index: number) => {
         const nextIndex = (index + companies.length) % companies.length;
-        const carousel = carouselRef.current;
-        const companyCard = carousel?.children.item(
-            nextIndex,
-        ) as HTMLElement | null;
-
         setActiveCompany(nextIndex);
-        carousel?.scrollTo({
-            left: companyCard?.offsetLeft ?? 0,
-            behavior: window.matchMedia('(prefers-reduced-motion: reduce)')
-                .matches
-                ? 'auto'
-                : 'smooth',
-        });
     };
 
     useEffect(() => {
-        if (!isAutoPlaying) {
+        if (
+            !isAutoPlaying ||
+            isHovering ||
+            companies.length < 2 ||
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) {
             return;
         }
 
         const interval = window.setInterval(() => {
-            const isCompactScreen =
-                window.matchMedia('(max-width: 899px)').matches;
-            const prefersReducedMotion = window.matchMedia(
-                '(prefers-reduced-motion: reduce)',
-            ).matches;
-
-            if (!isCompactScreen || prefersReducedMotion) {
-                return;
-            }
-
-            setActiveCompany((currentCompany) => {
-                const nextCompany = (currentCompany + 1) % companies.length;
-                const carousel = carouselRef.current;
-                const companyCard = carousel?.children.item(
-                    nextCompany,
-                ) as HTMLElement | null;
-
-                carousel?.scrollTo({
-                    left: companyCard?.offsetLeft ?? 0,
-                    behavior: 'smooth',
-                });
-
-                return nextCompany;
-            });
+            setActiveCompany(
+                (currentCompany) => (currentCompany + 1) % companies.length,
+            );
         }, 4500);
 
         return () => window.clearInterval(interval);
-    }, [isAutoPlaying]);
-
-    const updateActiveCompany = () => {
-        const carousel = carouselRef.current;
-
-        if (!carousel) {
-            return;
-        }
-
-        const carouselCenter = carousel.scrollLeft + carousel.clientWidth / 2;
-        const closestCompany = Array.from(carousel.children).reduce(
-            (closestIndex, child, index) => {
-                const card = child as HTMLElement;
-                const closestCard = carousel.children.item(
-                    closestIndex,
-                ) as HTMLElement;
-                const cardDistance = Math.abs(
-                    card.offsetLeft + card.offsetWidth / 2 - carouselCenter,
-                );
-                const closestDistance = Math.abs(
-                    closestCard.offsetLeft +
-                        closestCard.offsetWidth / 2 -
-                        carouselCenter,
-                );
-
-                return cardDistance < closestDistance ? index : closestIndex;
-            },
-            0,
-        );
-
-        setActiveCompany(closestCompany);
-    };
+    }, [isAutoPlaying, isHovering]);
 
     return (
-        <div className="pp-company-carousel">
-            <div className="pp-company-viewport">
-                <div
-                    ref={carouselRef}
-                    className="pp-company-grid"
-                    role="region"
-                    aria-roledescription="carrusel"
-                    aria-label="Clientes de PixelPerfect"
-                    onScroll={updateActiveCompany}
-                >
-                    {companies.map((company, index) => (
-                        <a
-                            key={company.name}
-                            href={`#proyecto-${company.project}`}
-                            onClick={onCompanySelect}
-                            className="pp-company"
-                            aria-label={`Ver el proyecto de ${company.name}`}
-                            aria-roledescription="diapositiva"
-                            aria-setsize={companies.length}
-                            aria-posinset={index + 1}
-                        >
-                            <span
-                                className={`pp-company-logo pp-company-logo-${company.tone}`}
-                                aria-hidden="true"
-                            >
-                                {company.mark}
-                            </span>
-                            <span className="pp-company-copy">
-                                <strong>{company.name}</strong>
-                                <span>{company.sector}</span>
-                            </span>
-                            <span className="pp-company-link">
-                                Ver proyecto
-                                <ArrowUpRight size={15} aria-hidden="true" />
-                            </span>
-                        </a>
-                    ))}
-                </div>
-            </div>
+        <Dialog
+            open={isProjectDialogOpen}
+            onOpenChange={(open) => {
+                if (!open && isImagePreviewOpen) {
+                    return;
+                }
+
+                setIsProjectDialogOpen(open);
+            }}
+        >
             <div
-                className="pp-company-controls"
-                aria-label="Controles del carrusel"
+                className="pp-company-showcase"
+                role="region"
+                aria-roledescription="carrusel"
+                aria-label="Proyectos de empresas que han confiado en PixelPerfect"
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
             >
-                <div className="pp-company-arrows">
-                    <button
-                        type="button"
-                        aria-label="Cliente anterior"
-                        onClick={() => scrollToCompany(activeCompany - 1)}
+                <div className="pp-company-feature" aria-live="polite">
+                    <div
+                        className={`pp-company-screen pp-company-screen-${selectedCompany.tone}`}
                     >
-                        <ChevronLeft size={19} aria-hidden="true" />
-                    </button>
-                    <button
-                        type="button"
-                        aria-label="Cliente siguiente"
-                        onClick={() => scrollToCompany(activeCompany + 1)}
-                    >
-                        <ChevronRight size={19} aria-hidden="true" />
-                    </button>
+                        <div className="pp-company-screen-head">
+                            <div className="pp-company-screen-brand">
+                                <span
+                                    className={`pp-company-logo pp-company-logo-${selectedCompany.tone}`}
+                                    aria-hidden="true"
+                                >
+                                    <img
+                                        src={selectedCompany.logo}
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                </span>
+                                <span>
+                                    <small>IMAGENES DEL PROYECTO</small>
+                                    <strong>{selectedCompany.name}</strong>
+                                </span>
+                            </div>
+                            <span className="pp-company-count">
+                                {String(activeCompany + 1).padStart(2, '0')} /{' '}
+                                {String(companies.length).padStart(2, '0')}
+                            </span>
+                        </div>
+                        <div className="pp-company-image-frame">
+                            <img
+                                src={selectedCompany.image}
+                                alt={selectedCompany.imageAlt}
+                                loading="lazy"
+                            />
+                            <span>Vista de portafolio</span>
+                        </div>
+                        <div className="pp-company-screen-meta">
+                            <span>{selectedCompany.sector}</span>
+                            <span>Diseño y desarrollo a la medida</span>
+                        </div>
+                    </div>
+
+                    <div className="pp-company-story">
+                        {/* <p className="pp-eyebrow">Proyecto seleccionado</p> */}
+                        <h3>{selectedCompany.name}</h3>
+                        <p>{selectedProject.description}</p>
+                        <DialogTrigger asChild>
+                            <button
+                                type="button"
+                                className="pp-button pp-company-story-link"
+                                onClick={() => setIsAutoPlaying(false)}
+                            >
+                                Más información
+                                <ArrowUpRight size={17} aria-hidden="true" />
+                            </button>
+                        </DialogTrigger>
+                    </div>
                 </div>
+
                 <div
-                    className="pp-company-dots"
-                    aria-label="Seleccionar cliente"
+                    className="pp-company-rail"
+                    role="listbox"
+                    aria-label="Seleccionar empresa"
                 >
                     {companies.map((company, index) => (
                         <button
                             key={company.name}
                             type="button"
-                            className={
-                                index === activeCompany ? 'is-active' : ''
-                            }
-                            aria-label={`Mostrar ${company.name}`}
-                            aria-current={
-                                index === activeCompany ? 'true' : undefined
-                            }
-                            onClick={() => scrollToCompany(index)}
-                        />
+                            className={`pp-company-rail-card ${index === activeCompany ? 'is-active' : ''}`}
+                            role="option"
+                            aria-selected={index === activeCompany}
+                            onClick={() => selectCompany(index)}
+                        >
+                            <span
+                                className={`pp-company-logo pp-company-logo-${company.tone}`}
+                                aria-hidden="true"
+                            >
+                                <img src={company.logo} alt="" loading="lazy" />
+                            </span>
+                            <span>
+                                <strong>{company.name}</strong>
+                                <small>{company.sector}</small>
+                            </span>
+                            <ArrowUpRight size={16} aria-hidden="true" />
+                        </button>
                     ))}
                 </div>
-                <button
-                    type="button"
-                    className="pp-company-autoplay"
-                    aria-label={
-                        isAutoPlaying
-                            ? 'Pausar movimiento automático'
-                            : 'Reanudar movimiento automático'
-                    }
-                    aria-pressed={!isAutoPlaying}
-                    onClick={() => setIsAutoPlaying((isPlaying) => !isPlaying)}
+
+                <div
+                    className="pp-company-controls"
+                    aria-label="Controles del carrusel"
                 >
-                    {isAutoPlaying ? (
-                        <Pause size={17} aria-hidden="true" />
-                    ) : (
-                        <Play size={17} aria-hidden="true" />
-                    )}
-                </button>
+                    <div className="pp-company-arrows">
+                        <button
+                            type="button"
+                            aria-label="Cliente anterior"
+                            onClick={() => selectCompany(activeCompany - 1)}
+                        >
+                            <ChevronLeft size={19} aria-hidden="true" />
+                        </button>
+                        <button
+                            type="button"
+                            aria-label="Cliente siguiente"
+                            onClick={() => selectCompany(activeCompany + 1)}
+                        >
+                            <ChevronRight size={19} aria-hidden="true" />
+                        </button>
+                    </div>
+                    <div
+                        className="pp-company-dots"
+                        aria-label="Seleccionar cliente"
+                    >
+                        {companies.map((company, index) => (
+                            <button
+                                key={company.name}
+                                type="button"
+                                className={
+                                    index === activeCompany ? 'is-active' : ''
+                                }
+                                aria-label={`Mostrar ${company.name}`}
+                                aria-current={
+                                    index === activeCompany ? 'true' : undefined
+                                }
+                                onClick={() => selectCompany(index)}
+                            />
+                        ))}
+                    </div>
+                    <button
+                        type="button"
+                        className="pp-company-autoplay"
+                        aria-label={
+                            isAutoPlaying
+                                ? 'Pausar movimiento automático'
+                                : 'Reanudar movimiento automático'
+                        }
+                        aria-pressed={!isAutoPlaying}
+                        onClick={() =>
+                            setIsAutoPlaying((isPlaying) => !isPlaying)
+                        }
+                    >
+                        {isAutoPlaying ? (
+                            <Pause size={17} aria-hidden="true" />
+                        ) : (
+                            <Play size={17} aria-hidden="true" />
+                        )}
+                    </button>
+                </div>
             </div>
-        </div>
+            <DialogContent
+                className="pp-project-dialog border-[#dcd5e1] bg-[#f8f6f2] p-0 text-[#211d29] sm:max-w-3xl"
+                onPointerDownOutside={(event) => {
+                    if (isImagePreviewOpen) {
+                        event.preventDefault();
+                    }
+                }}
+            >
+                <DialogHeader className="pp-project-dialog-header">
+                    <span className="pp-project-dialog-kicker">
+                        {selectedProject.category} · {selectedProject.status}
+                    </span>
+                    <DialogTitle className="pr-8 text-2xl">
+                        {selectedCompany.name}
+                    </DialogTitle>
+                </DialogHeader>
+                <div className="pp-project-dialog-body">
+                    <DialogDescription className="text-base leading-7 text-[#6d6475]">
+                        {selectedProject.description}
+                    </DialogDescription>
+                    <ProjectGallery
+                        project={selectedProject}
+                        onPreviewOpenChange={setIsImagePreviewOpen}
+                    />
+                    {selectedProject.url && (
+                        <a
+                            className="pp-live-link"
+                            href={selectedProject.url}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            Visitar sitio público{' '}
+                            <ArrowUpRight size={18} aria-hidden="true" />
+                        </a>
+                    )}
+                </div>
+                <div className="pp-project-dialog-footer">
+                    <a
+                        className="pp-button justify-center"
+                        href={whatsappHref}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Quiero algo así para mi negocio{' '}
+                        <ArrowUpRight size={18} aria-hidden="true" />
+                    </a>
+                </div>
+            </DialogContent>
+        </Dialog>
     );
 }
 
@@ -322,8 +380,7 @@ export default function Welcome() {
                         href="#contacto"
                         className="pp-header-cta hidden sm:inline-flex"
                     >
-                        Hablemos de tu idea{' '}
-                        <ArrowUpRight size={16} aria-hidden="true" />
+                        Contacto <ArrowUpRight size={16} aria-hidden="true" />
                     </a>
                     <Button
                         variant="ghost"
@@ -384,7 +441,7 @@ export default function Welcome() {
                                     <em>A tu medida, de principio a fin.</em>
                                 </p>
                                 <div className="mt-8 flex flex-wrap items-center gap-5">
-                                    <a href="#proyectos" className="pp-button">
+                                    <a href="#clientes" className="pp-button">
                                         Nuestro trabajo{' '}
                                         <ArrowUpRight
                                             size={18}
@@ -453,7 +510,7 @@ export default function Welcome() {
                         </div>
                         <p style={{ marginBottom: '20px' }}>
                             La tecnología debe ayudarte a avanzar. Nuestro
-                            principal objetivo es que tu negocio optimize sus
+                            principal objetivo es que tu negocio optimice sus
                             procesos y desarrolle herramientas que eviten
                             trabajo repetitivo.
                         </p>
@@ -513,10 +570,10 @@ export default function Welcome() {
                                     <em>en un solo lugar.</em>
                                 </h2>
                                 <p>
-                                    Una plataforma modular para organizar
-                                    empleados, expedientes, documentos y firmas,
-                                    vacaciones, horarios, inventarios y
-                                    estadísticas sin perder el control entre
+                                    Prueba nuestra plataforma modular para
+                                    organizar empleados, expedientes, documentos
+                                    y firmas, vacaciones, horarios, inventarios
+                                    y estadísticas sin perder el control entre
                                     archivos y mensajes sueltos.
                                 </p>
                                 <div className="pp-enterprise-points">
@@ -616,7 +673,7 @@ export default function Welcome() {
                             </div>
                         </div>
                     </section>
-                    <section className="pp-work-section" id="proyectos">
+                    {/* <section className="pp-work-section" id="proyectos">
                         <div className="pp-container pp-section">
                             <div className="pp-section-heading">
                                 <div>
@@ -774,31 +831,32 @@ export default function Welcome() {
                                 ))}
                             </div>
                         </div>
-                    </section>
+                    </section> */}
                     <section
-                        className="pp-container pp-section pp-companies"
-                        id="empresas"
+                        className="pp-container pp-section pp-companies -mt-12"
+                        id="clientes"
                     >
                         <div className="pp-companies-heading">
                             <p className="pp-eyebrow">
-                                04 / Empresas que han confiado en nosotros
+                                03 / Empresas que han confiado en nosotros
                             </p>
                             <h2>
-                                Grandes ideas, <em>grandes clientes.</em>
+                                Grandes ideas,{' '}
+                                <b>
+                                    <em>grandes clientes.</em>
+                                </b>
                             </h2>
                             <p className="pp-companies-intro">
                                 Detrás de cada proyecto hay un equipo, una idea
                                 y un negocio que quiere llegar más lejos.
                             </p>
                         </div>
-                        <CompaniesCarousel
-                            onCompanySelect={() => setFilter('Todo')}
-                        />
+                        <CompaniesCarousel />
                     </section>
                     <section className="pp-contact" id="contacto">
                         <div className="pp-container">
                             <p className="pp-eyebrow">
-                                05 / Hagamos que suceda
+                                04 / Hagamos que suceda
                             </p>
                             <div className="pp-contact-content">
                                 <div>
@@ -843,19 +901,7 @@ export default function Welcome() {
                         </div>
                     </section>
                 </main>
-                <footer className="pp-container pp-footer">
-                    <a
-                        href="#inicio"
-                        aria-label="PixelPerfect, volver al inicio"
-                    >
-                        <Wordmark />
-                    </a>
-                    <p>© {new Date().getFullYear()} PixelPerfect.</p>
-                    <a href="#inicio" className="pp-text-link">
-                        Volver arriba{' '}
-                        <ArrowUpRight size={16} aria-hidden="true" />
-                    </a>
-                </footer>
+                <SiteFooter />
             </div>
         </>
     );
