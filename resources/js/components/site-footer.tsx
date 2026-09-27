@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { House, Mail, MessageCircle } from 'lucide-react';
-import { SocialRail } from '@/components/social-rail';
+// import { SocialRail } from '@/components/social-rail';
 import { localizeContent, localizeUrl, translateText, type Locale } from '@/lib/localization';
 import { home } from '@/routes';
 
@@ -17,7 +17,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
 
     return localizeContent(
         <>
-            <SocialRail locale={locale} />
+            {/* <SocialRail locale={locale} /> */}
             <footer className="border-border/70 bg-card/70 border-t px-4 py-3 backdrop-blur-sm sm:px-6">
                 <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
                     <div className="grid gap-0.5">

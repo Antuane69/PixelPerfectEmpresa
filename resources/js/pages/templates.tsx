@@ -164,10 +164,10 @@ export default function Templates() {
                                 Soluciones listas para crecer
                             </p>
                             <h1 className="mt-7 max-w-4xl text-[clamp(3.6rem,7vw,7.4rem)] leading-[0.9] font-semibold tracking-[-0.075em]">
-                                Tu negocio en línea,
+                                Plantillas web
                                 <br />
                                 <em className="font-serif font-medium text-[#9743d5]">
-                                    más rápido.
+                                    para tu negocio.
                                 </em>
                             </h1>
                             <p className="pp-intro max-w-xl">

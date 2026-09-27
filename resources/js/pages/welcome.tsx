@@ -439,11 +439,11 @@ export default function Welcome() {
                                     web para negocios de todo México
                                 </p>
                                 <h1>
-                                    Da el siguiente
+                                    Diseño web
                                     <br />
-                                    gran paso
+                                    y software
                                     <br />
-                                    <em>en tu negocio.</em>
+                                    <em>para negocios.</em>
                                 </h1>
                                 <p className="pp-intro">
                                     Creamos páginas web y sistemas para negocios

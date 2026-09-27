@@ -10,7 +10,7 @@ class SiteSeo
     }
 
     /**
-     * @return array{title: string, canonical: string, meta: array<string, string>, structuredData: string}|null
+     * @return array{title: string, canonical: string, alternates: array<string, string>, meta: array<string, string>, structuredData: string}|null
      */
     public function page(?string $routeName): ?array
     {
@@ -43,6 +43,10 @@ class SiteSeo
         return [
             'title' => $page['title'],
             'canonical' => $canonical,
+            'alternates' => [
+                'es-MX' => $this->url($pageName),
+                'en' => $this->url('en.'.$pageName),
+            ],
             'meta' => [
                 'description' => $page['description'],
                 'robots' => 'index, follow, max-image-preview:large',

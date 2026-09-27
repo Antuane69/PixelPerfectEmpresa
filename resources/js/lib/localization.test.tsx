@@ -29,6 +29,14 @@ describe('localization', () => {
         );
     });
 
+    it('translates the service headings used on the marketing pages', () => {
+        expect(translateText('Diseño web', 'en')).toBe('Web design');
+        expect(translateText('y software', 'en')).toBe('and software');
+        expect(translateText('Plantillas web', 'en')).toBe(
+            'Website templates',
+        );
+    });
+
     it('prefixes internal links but keeps same-page anchors in place', () => {
         const markup = renderToStaticMarkup(
             <LocalizedContent locale="en">

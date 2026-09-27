@@ -44,6 +44,9 @@
             @if ($seo)
                 <title>{{ $seo['title'] }} - {{ config('seo.name') }}</title>
                 <link data-inertia="canonical" rel="canonical" href="{{ $seo['canonical'] }}">
+                @foreach ($seo['alternates'] as $language => $url)
+                    <link data-inertia="alternate-{{ $language }}" rel="alternate" hreflang="{{ $language }}" href="{{ $url }}">
+                @endforeach
                 @foreach ($seo['meta'] as $key => $content)
                     @if (str_starts_with($key, 'og:'))
                         <meta data-inertia="{{ $key }}" property="{{ $key }}" content="{{ $content }}">

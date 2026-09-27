@@ -146,9 +146,8 @@ const englishTranslations: Record<string, string> = {
     Inicio: 'Home',
     'Diseño web para negocios de todo México':
         'Web design for businesses across Mexico',
-    'Da el siguiente': 'Take the next',
-    'gran paso': 'big step',
-    'en tu negocio.': 'in your business.',
+    'y software': 'and software',
+    'para negocios.': 'for businesses.',
     'Creamos páginas web y sistemas para negocios de todo México, incluidos Guadalajara y Puerto Vallarta. Diseño y desarrollo de software para crecer y destacar.':
         'We build websites and software for businesses across Mexico, including Guadalajara and Puerto Vallarta. Digital products designed to help you grow and stand out.',
     'A tu medida, de principio a fin.': 'Made for you, from start to finish.',
@@ -215,8 +214,8 @@ const englishTranslations: Record<string, string> = {
     'Adaptamos colores, contenidos, imágenes y datos de contacto para que la plantilla represente a tu negocio.':
         'We tailor the colors, content, images, and contact details so the template feels like your business.',
     'Soluciones listas para crecer': 'Ready-to-grow solutions',
-    'Tu negocio en línea,': 'Your business online,',
-    'más rápido.': 'faster.',
+    'Plantillas web': 'Website templates',
+    'para tu negocio.': 'for your business.',
     'Esta colección reúne plantillas profesionales que podemos implementar y personalizar para tu negocio. Una alternativa rápida y más económica que desarrollar cada pantalla desde cero.':
         'This collection features professional templates we can customize and launch for your business. A faster, more affordable option than building every screen from scratch.',
     'Ver plantillas': 'View templates',

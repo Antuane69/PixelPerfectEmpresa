@@ -66,6 +66,24 @@ class SeoTest extends TestCase
             ->assertSee('property="og:locale" content="en_US"', false);
     }
 
+    #[TestWith(['/', '/en'])]
+    #[TestWith(['/pixel-perfect-empresarial', '/en/pixel-perfect-empresarial'])]
+    #[TestWith(['/plantillas', '/en/plantillas'])]
+    public function test_localized_pages_link_to_both_language_versions(string $spanishPath, string $englishPath): void
+    {
+        foreach ([$spanishPath, $englishPath] as $path) {
+            $response = $this->get($path);
+
+            $document = new DOMDocument;
+            @$document->loadHTML('<?xml encoding="UTF-8">'.$response->getContent());
+            $xpath = new DOMXPath($document);
+
+            $this->assertSame('https://pixelperfectmx.com'.$spanishPath, $xpath->evaluate('string(//head/link[@rel="alternate" and @hreflang="es-MX"]/@href)'));
+            $this->assertSame('https://pixelperfectmx.com'.$englishPath, $xpath->evaluate('string(//head/link[@rel="alternate" and @hreflang="en"]/@href)'));
+            $this->assertSame(2, $xpath->query('//head/link[@rel="alternate"]')->length);
+        }
+    }
+
     #[TestWith(['/', 'welcome', 'Diseño de páginas web y software a la medida en México'])]
     #[TestWith(['/pixel-perfect-empresarial', 'empresarial', 'Sistema de gestión y administración de empresas'])]
     #[TestWith(['/plantillas', 'templates', 'Plantillas web rápidas y accesibles para negocios'])]
@@ -81,6 +99,8 @@ class SeoTest extends TestCase
             ->assertJsonPath('component', $component)
             ->assertJsonPath('props.seo.title', $title)
             ->assertJsonPath('props.seo.canonical', 'https://pixelperfectmx.com'.$path)
+            ->assertJsonPath('props.seo.alternates.es-MX', 'https://pixelperfectmx.com'.$path)
+            ->assertJsonPath('props.seo.alternates.en', 'https://pixelperfectmx.com/en'.($path === '/' ? '' : $path))
             ->assertJsonPath('props.seo.meta.robots', 'index, follow, max-image-preview:large')
             ->assertJsonPath('props.seo.meta.og:url', 'https://pixelperfectmx.com'.$path);
     }
