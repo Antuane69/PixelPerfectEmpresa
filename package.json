@@ -3,12 +3,12 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "SKIP_WAYFINDER=true vp build && vp build --ssr",
-        "build:ssr": "vp build && vp build --ssr",
-        "dev": "vp dev",
-        "check": "vp check",
-        "check:fix": "vp check --fix",
-        "types:check": "tsc --noEmit"
+      "build": "SKIP_WAYFINDER=true vite build && SKIP_WAYFINDER=true vite build --ssr",
+      "build:ssr": "SKIP_WAYFINDER=true vite build && SKIP_WAYFINDER=true vite build --ssr",
+      "dev": "vite",
+      "check": "vite check",
+      "check:fix": "vite check --fix",
+      "types:check": "tsc --noEmit"
     },
     "dependencies": {
         "@inertiajs/react": "^3.0.0",
