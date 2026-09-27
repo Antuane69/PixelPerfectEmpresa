@@ -1,0 +1,1 @@
+import{i as e,r as t}from"./wayfinder-B8GH_2sf.js";var n=e(),r=t();function i(){let e=(0,n.c)(1),t;return e[0]===Symbol.for(`react.memo_cache_sentinel`)?(t=(0,r.jsxs)(`span`,{className:`pp-wordmark`,children:[(0,r.jsx)(`span`,{children:`PIXEL`}),(0,r.jsx)(`em`,{children:`PERFECT`})]}),e[0]=t):t=e[0],t}export{i as t};
