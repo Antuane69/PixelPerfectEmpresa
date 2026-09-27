@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vp build && vp build --ssr",
+        "build": "SKIP_WAYFINDER=true vp build && vp build --ssr",
         "build:ssr": "vp build && vp build --ssr",
         "dev": "vp dev",
         "check": "vp check",

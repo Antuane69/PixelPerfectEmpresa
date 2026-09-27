@@ -7,6 +7,8 @@ import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';
 import { defineConfig, lazyPlugins } from 'vite-plus';
 
+const skipWayfinder = process.env.SKIP_WAYFINDER === 'true';
+
 export default defineConfig({
     plugins: lazyPlugins(() => [
         laravel({
@@ -33,10 +35,14 @@ export default defineConfig({
             presets: [reactCompilerPreset()],
         }),
         tailwindcss(),
-        wayfinder({
-            formVariants: true,
-        }),
-    ]),
+    ...(skipWayfinder
+        ? []
+        : [
+              wayfinder({
+                  formVariants: true,
+              }),
+          ]),
+        ]),
     server: {
         watch: {
             ignored: [
