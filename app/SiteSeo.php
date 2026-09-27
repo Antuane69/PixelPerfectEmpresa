@@ -14,18 +14,26 @@ class SiteSeo
      */
     public function page(?string $routeName): ?array
     {
-        $page = config('seo.pages')[$routeName ?? ''] ?? null;
+        if ($routeName === null) {
+            return null;
+        }
+
+        $isEnglish = str_starts_with($routeName, 'en.');
+        $pageName = $isEnglish ? substr($routeName, 3) : $routeName;
+        $page = $isEnglish
+            ? config('seo.translations.en.pages')[$pageName] ?? null
+            : config('seo.pages')[$pageName] ?? null;
 
         if ($page === null) {
             return null;
         }
 
         $canonical = $this->url($routeName);
-        $home = $this->url('home');
+        $home = $this->url($isEnglish ? 'en.home' : 'home');
         $name = config('seo.name');
         $title = $page['title'].' - '.$name;
         $areasServed = [
-            ['@type' => 'Country', 'name' => config('seo.country')],
+            ['@type' => 'Country', 'name' => config($isEnglish ? 'seo.translations.en.country' : 'seo.country')],
             ...array_map(
                 fn (string $city): array => ['@type' => 'City', 'name' => $city],
                 config('seo.cities'),
@@ -43,7 +51,7 @@ class SiteSeo
                 'og:description' => $page['description'],
                 'og:url' => $canonical,
                 'og:site_name' => $name,
-                'og:locale' => 'es_MX',
+                'og:locale' => $isEnglish ? 'en_US' : 'es_MX',
                 'twitter:card' => 'summary',
                 'twitter:title' => $title,
                 'twitter:description' => $page['description'],
@@ -65,7 +73,7 @@ class SiteSeo
                         '@id' => $home.'#website',
                         'name' => $name,
                         'url' => $home,
-                        'inLanguage' => 'es-MX',
+                        'inLanguage' => $isEnglish ? 'en' : 'es-MX',
                         'publisher' => ['@id' => $home.'#organization'],
                     ],
                     [
@@ -74,7 +82,7 @@ class SiteSeo
                         'url' => $canonical,
                         'name' => $title,
                         'description' => $page['description'],
-                        'inLanguage' => 'es-MX',
+                        'inLanguage' => $isEnglish ? 'en' : 'es-MX',
                         'isPartOf' => ['@id' => $home.'#website'],
                         'mainEntity' => ['@id' => $canonical.'#service'],
                     ],

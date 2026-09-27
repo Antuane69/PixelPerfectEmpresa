@@ -1,21 +1,23 @@
 import { Link } from '@inertiajs/react';
 import { House, Mail, MessageCircle } from 'lucide-react';
 import { SocialRail } from '@/components/social-rail';
+import { localizeContent, localizeUrl, translateText, type Locale } from '@/lib/localization';
 import { home } from '@/routes';
 
 const contactMessage =
     'Hola, quiero hacer una cotización con Pixel Perfect. ¿Me pueden ayudar, por favor?';
-const emailHref = `mailto:pixelperfect.nacif@gmail.com?subject=${encodeURIComponent('Solicitud de cotización')}&body=${encodeURIComponent(contactMessage)}`;
-const whatsappHref = `https://wa.me/523221974630?text=${encodeURIComponent(contactMessage)}`;
 const contactLinkClass =
     'flex size-8 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-primary transition-colors hover:border-primary/35 hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none';
 
-export function SiteFooter() {
+export function SiteFooter({ locale }: { locale: Locale }) {
     const currentYear = new Date().getFullYear();
+    const localizedMessage = translateText(contactMessage, locale);
+    const emailHref = `mailto:pixelperfect.nacif@gmail.com?subject=${encodeURIComponent(translateText('Solicitud de cotización', locale))}&body=${encodeURIComponent(localizedMessage)}`;
+    const whatsappHref = `https://wa.me/523221974630?text=${encodeURIComponent(localizedMessage)}`;
 
-    return (
+    return localizeContent(
         <>
-            <SocialRail />
+            <SocialRail locale={locale} />
             <footer className="border-border/70 bg-card/70 border-t px-4 py-3 backdrop-blur-sm sm:px-6">
                 <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
                     <div className="grid gap-0.5">
@@ -37,7 +39,7 @@ export function SiteFooter() {
                         aria-label="Enlaces de contacto"
                     >
                         <Link
-                            href={home()}
+                            href={localizeUrl(home.url(), locale)}
                             className={contactLinkClass}
                             aria-label="Ir al inicio"
                             title="Inicio"
@@ -68,6 +70,7 @@ export function SiteFooter() {
                     </nav>
                 </div>
             </footer>
-        </>
+        </>,
+        locale,
     );
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 @php($seo = $page['props']['seo'] ?? null)
-<html lang="{{ $seo ? 'es-MX' : str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
+@php($locale = $page['props']['locale'] ?? app()->getLocale())
+<html lang="{{ $locale === 'en' ? 'en' : ($seo ? 'es-MX' : str_replace('_', '-', $locale)) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">

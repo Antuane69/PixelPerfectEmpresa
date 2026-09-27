@@ -2,13 +2,20 @@ import { ArrowUpRight, ChartNoAxesCombined, LockKeyhole } from 'lucide-react';
 import { useState } from 'react';
 import { PortfolioPreview } from '@/components/portfolio-preview';
 import type { PortfolioProject } from '@/lib/portfolio';
+import { localizeContent, type Locale } from '@/lib/localization';
 
-export function ProjectCover({ project }: { project: PortfolioProject }) {
+export function ProjectCover({
+    project,
+    locale = 'es',
+}: {
+    project: PortfolioProject;
+    locale?: Locale;
+}) {
     const [imageFailed, setImageFailed] = useState(false);
     const coverImage = project.images?.[0];
 
     if (coverImage && !imageFailed) {
-        return (
+        return localizeContent(
             <img
                 className="pp-project-image"
                 src={coverImage}
@@ -17,15 +24,16 @@ export function ProjectCover({ project }: { project: PortfolioProject }) {
                 width={1280}
                 height={720}
                 onError={() => setImageFailed(true)}
-            />
+            />,
+            locale,
         );
     }
 
     if (project.preview === 'brand') {
-        return <PortfolioPreview variant="brand" />;
+        return <PortfolioPreview variant="brand" locale={locale} />;
     }
 
-    return (
+    return localizeContent(
         <div className={`pp-private-cover pp-private-${project.preview}`}>
             <span className="pp-private-status">{project.status}</span>
             {project.preview === 'sports' ? (
@@ -39,6 +47,7 @@ export function ProjectCover({ project }: { project: PortfolioProject }) {
                 Capturas próximamente{' '}
                 <ArrowUpRight size={17} aria-hidden="true" />
             </div>
-        </div>
+        </div>,
+        locale,
     );
 }

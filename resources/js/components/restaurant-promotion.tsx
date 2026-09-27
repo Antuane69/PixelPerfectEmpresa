@@ -1,5 +1,6 @@
 import { Clock3, Gift, MessageCircle, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
+import { localizeContent, type Locale } from '@/lib/localization';
 import {
     Dialog,
     DialogContent,
@@ -37,7 +38,13 @@ const promotion: {
     ],
 };
 
-export function RestaurantPromotion({ onContact }: { onContact: () => void }) {
+export function RestaurantPromotion({
+    locale,
+    onContact,
+}: {
+    locale: Locale;
+    onContact: () => void;
+}) {
     const [open, setOpen] = useState(false);
     const now = Date.now();
     const active =
@@ -48,7 +55,8 @@ export function RestaurantPromotion({ onContact }: { onContact: () => void }) {
 
     if (!active) return null;
 
-    return (
+    return localizeContent(
+        <>
         <Dialog open={open} onOpenChange={setOpen}>
             <aside
                 className="promotion-bar"
@@ -103,7 +111,9 @@ export function RestaurantPromotion({ onContact }: { onContact: () => void }) {
                     )}
                     <div className="promotion-conditions">
                         <h3>
-                            Condiciones{promotion.demo ? ' de ejemplo' : ''}
+                            {promotion.demo
+                                ? 'Condiciones de ejemplo'
+                                : 'Condiciones'}
                         </h3>
                         <ul>
                             {promotion.conditions.map((condition) => (
@@ -124,5 +134,7 @@ export function RestaurantPromotion({ onContact }: { onContact: () => void }) {
                 </div>
             </DialogContent>
         </Dialog>
+        </>,
+        locale,
     );
 }

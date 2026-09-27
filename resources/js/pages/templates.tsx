@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import {
     ArrowRight,
     ArrowUpRight,
@@ -18,6 +18,12 @@ import { useState } from 'react';
 import { MarketingWordmark } from '@/components/marketing-wordmark';
 import { SeoHead } from '@/components/seo-head';
 import { SiteFooter } from '@/components/site-footer';
+import {
+    LocaleSwitcher,
+    localizeContent,
+    translateText,
+    type Locale,
+} from '@/lib/localization';
 import { Button } from '@/components/ui/button';
 import { home, templates } from '@/routes';
 import { home as restaurantHome } from '@/routes/restaurant';
@@ -25,8 +31,6 @@ import '../../css/welcome.css';
 
 const contactMessage =
     'Hola, me interesó una de las plantillas de Pixel Perfect. Quisiera recibir más información.';
-const whatsappHref = `https://wa.me/523221974630?text=${encodeURIComponent(contactMessage)}`;
-const emailHref = `mailto:pixelperfect.nacif@gmail.com?subject=${encodeURIComponent('Información sobre plantillas')}&body=${encodeURIComponent(contactMessage)}`;
 
 const benefits = [
     {
@@ -50,15 +54,19 @@ const benefits = [
 ];
 
 export default function Templates() {
+    const { locale } = usePage<{ locale: Locale }>().props;
     const [menuOpen, setMenuOpen] = useState(false);
+    const localizedMessage = translateText(contactMessage, locale);
+    const whatsappHref = `https://wa.me/523221974630?text=${encodeURIComponent(localizedMessage)}`;
+    const emailHref = `mailto:pixelperfect.nacif@gmail.com?subject=${encodeURIComponent(translateText('Información sobre plantillas', locale))}&body=${encodeURIComponent(localizedMessage)}`;
 
-    return (
+    return localizeContent(
         <>
             <SeoHead />
             <Head>
                 <meta name="theme-color" content="#f8f6f2" />
             </Head>
-            <div className="pp-site min-h-screen" lang="es">
+            <div className="pp-site min-h-screen" lang={locale}>
                 <a className="pp-skip" href="#contenido">
                     Saltar al contenido
                 </a>
@@ -100,6 +108,7 @@ export default function Templates() {
                     >
                         Contacto <ArrowUpRight size={16} aria-hidden="true" />
                     </a>
+                    <LocaleSwitcher locale={locale} />
                     <Button
                         variant="ghost"
                         size="icon"
@@ -385,8 +394,9 @@ export default function Templates() {
                     </section>
                 </main>
 
-                <SiteFooter />
+                <SiteFooter locale={locale} />
             </div>
-        </>
+        </>,
+        locale,
     );
 }

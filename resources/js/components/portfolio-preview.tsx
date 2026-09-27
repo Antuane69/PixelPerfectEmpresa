@@ -8,14 +8,17 @@ import {
     Sparkles,
     UsersRound,
 } from 'lucide-react';
+import { localizeContent, type Locale } from '@/lib/localization';
 
 export function PortfolioPreview({
     variant,
+    locale = 'es',
 }: {
     variant: 'platform' | 'brand';
+    locale?: Locale;
 }) {
     if (variant === 'brand') {
-        return (
+        return localizeContent(
             <div
                 className="pp-brand-preview"
                 aria-label="Exploración visual de la identidad PixelPerfect"
@@ -41,11 +44,12 @@ export function PortfolioPreview({
                     </span>
                     <ArrowUpRight size={27} aria-hidden="true" />
                 </div>
-            </div>
+            </div>,
+            locale,
         );
     }
 
-    return (
+    return localizeContent(
         <div
             className="pp-dashboard-preview"
             aria-label="Vista ilustrativa del sistema de gestión PixelPerfect, con datos de ejemplo"
@@ -129,6 +133,7 @@ export function PortfolioPreview({
                     </div>
                 </div>
             </div>
-        </div>
+        </div>,
+        locale,
     );
 }

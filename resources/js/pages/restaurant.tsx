@@ -1,8 +1,14 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { Image } from 'antd';
 import { useState } from 'react';
 import { SiteFooter } from '@/components/site-footer';
 import { RestaurantPromotion } from '@/components/restaurant-promotion';
+import {
+    LocaleSwitcher,
+    localizeContent,
+    translateText,
+    type Locale,
+} from '@/lib/localization';
 import {
     ArrowRight,
     BookOpen,
@@ -95,8 +101,6 @@ const mapsSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encoded
 const mapsEmbedUrl = `https://www.google.com/maps?q=${encodedAddress}&output=embed`;
 const demoContactMessage =
     'Me intereso la demo de restaurantes. Quisiera recibir más información.';
-const demoWhatsappHref = `https://wa.me/523221974630?text=${encodeURIComponent(demoContactMessage)}`;
-const demoEmailHref = `mailto:pixelperfect.nacif@gmail.com?subject=${encodeURIComponent('Demo de restaurantes')}&body=${encodeURIComponent(demoContactMessage)}`;
 const benefits = [
     {
         icon: Leaf,
@@ -245,6 +249,7 @@ export default function Restaurant({
 }: {
     view?: 'home' | 'menu' | 'gallery';
 }) {
+    const { locale } = usePage<{ locale: Locale }>().props;
     const isMenu = view === 'menu';
     const isGallery = view === 'gallery';
     const [category, setCategory] = useState('Todo');
@@ -266,6 +271,9 @@ export default function Restaurant({
         (item) =>
             galleryCategory === 'Todo' || item.category === galleryCategory,
     );
+    const localizedDemoMessage = translateText(demoContactMessage, locale);
+    const demoWhatsappHref = `https://wa.me/523221974630?text=${encodeURIComponent(localizedDemoMessage)}`;
+    const demoEmailHref = `mailto:pixelperfect.nacif@gmail.com?subject=${encodeURIComponent(translateText('Demo de restaurantes', locale))}&body=${encodeURIComponent(localizedDemoMessage)}`;
     const menuLink = (label = 'Ver menú completo', dark = false) => (
         <Link
             className={'restaurant-button ' + (dark ? 'button-dark' : '')}
@@ -275,20 +283,29 @@ export default function Restaurant({
             <ArrowRight size={17} />
         </Link>
     );
-    return (
-        <div className="restaurant">
+    return localizeContent(
+        <div className="restaurant" lang={locale}>
             <Head
                 title={
                     isMenu
-                        ? 'Nuestro menú | Restaurante Pixel Perfect'
+                        ? translateText(
+                              'Nuestro menú | Restaurante Pixel Perfect',
+                              locale,
+                          )
                         : isGallery
-                          ? 'Galería | Restaurante Pixel Perfect'
-                          : 'Restaurante Pixel Perfect'
+                          ? translateText(
+                                'Galería | Restaurante Pixel Perfect',
+                                locale,
+                            )
+                          : translateText('Restaurante Pixel Perfect', locale)
                 }
             >
                 <meta
                     name="description"
-                    content="Cocina hecha con cariño. Descubre los platillos, bebidas y postres de Restaurante Pixel Perfect."
+                    content={translateText(
+                        'Cocina hecha con cariño. Descubre los platillos, bebidas y postres de Restaurante Pixel Perfect.',
+                        locale,
+                    )}
                 />
             </Head>
             <a href="#contenido" className="skip-link">
@@ -378,8 +395,12 @@ export default function Restaurant({
                         )}
                     </button>
                 </nav>
+                <LocaleSwitcher locale={locale} />
             </header>
-            <RestaurantPromotion onContact={() => setContactOpen(true)} />
+            <RestaurantPromotion
+                locale={locale}
+                onContact={() => setContactOpen(true)}
+            />
             <main id="contenido">
                 {view === 'home' ? (
                     <>
@@ -1057,7 +1078,7 @@ export default function Restaurant({
                     </div>
                 </section>
             ) : null}
-            <SiteFooter />
+            <SiteFooter locale={locale} />
             <Dialog open={contactOpen} onOpenChange={setContactOpen}>
                 <DialogContent className="restaurant-contact">
                     <Sprout className="contact-leaf" />
@@ -1101,6 +1122,7 @@ export default function Restaurant({
                     </Link>
                 </DialogContent>
             </Dialog>
-        </div>
+        </div>,
+        locale,
     );
 }

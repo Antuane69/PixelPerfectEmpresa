@@ -22,4 +22,26 @@ return [
             'service' => 'Plantillas web personalizables para negocios',
         ],
     ],
+    'translations' => [
+        'en' => [
+            'country' => 'Mexico',
+            'pages' => [
+                'home' => [
+                    'title' => 'Custom Website Design and Software in Mexico',
+                    'description' => 'Website design, development, and business management systems for companies across Mexico. Serving Guadalajara, Puerto Vallarta, and beyond.',
+                    'service' => 'Custom website design and software development',
+                ],
+                'empresarial' => [
+                    'title' => 'Business Management and Administration System',
+                    'description' => 'Business management software for companies across Mexico. Manage employees, documents, inventory, and more. Serving Guadalajara, Puerto Vallarta, and beyond.',
+                    'service' => 'Business management and administration system',
+                ],
+                'templates' => [
+                    'title' => 'Fast, Affordable Website Templates for Businesses',
+                    'description' => 'Professional website templates for businesses across Mexico, ready to customize and launch faster and at a lower cost than a custom build.',
+                    'service' => 'Customizable website templates for businesses',
+                ],
+            ],
+        ],
+    ],
 ];

@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import {
     ArrowRight,
     ArrowUpRight,
@@ -26,6 +26,12 @@ import { ProjectGallery } from '@/components/project-gallery';
 import { MarketingWordmark } from '@/components/marketing-wordmark';
 import { SiteFooter } from '@/components/site-footer';
 import { SeoHead } from '@/components/seo-head';
+import {
+    LocaleSwitcher,
+    localizeContent,
+    translateText,
+    type Locale,
+} from '@/lib/localization';
 import { companies, projects } from '@/lib/portfolio';
 import { empresarial, templates } from '@/routes';
 import { Button } from '@/components/ui/button';
@@ -41,11 +47,8 @@ import '../../css/welcome.css';
 
 const message =
     'Hola, me gustaría platicar sobre una aplicación para mi negocio.';
-const whatsappHref = `https://wa.me/523221974630?text=${encodeURIComponent(message)}`;
-const emailHref = `mailto:pixelperfect.nacif@gmail.com?subject=${encodeURIComponent('Tengo un proyecto en mente')}&body=${encodeURIComponent(message)}`;
 const navigation = [
     ['Servicios', '#servicios'],
-    ['Clientes', '#clientes'],
     ['Pixel Perfect Empresarial', '#pixel-perfect-empresarial'],
 ];
 const services = [
@@ -75,7 +78,7 @@ const services = [
     },
 ];
 
-function CompaniesCarousel() {
+function CompaniesCarousel({ locale }: { locale: Locale }) {
     const [activeCompany, setActiveCompany] = useState(0);
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
     const [isHovering, setIsHovering] = useState(false);
@@ -85,6 +88,8 @@ function CompaniesCarousel() {
     const selectedProject =
         projects.find((project) => project.id === selectedCompany.project) ??
         projects[0];
+    const localizedMessage = translateText(message, locale);
+    const whatsappHref = `https://wa.me/523221974630?text=${encodeURIComponent(localizedMessage)}`;
 
     const selectCompany = (index: number) => {
         const nextIndex = (index + companies.length) % companies.length;
@@ -110,7 +115,7 @@ function CompaniesCarousel() {
         return () => window.clearInterval(interval);
     }, [isAutoPlaying, isHovering]);
 
-    return (
+    return localizeContent(
         <Dialog
             open={isProjectDialogOpen}
             onOpenChange={(open) => {
@@ -298,6 +303,7 @@ function CompaniesCarousel() {
                     <ProjectGallery
                         project={selectedProject}
                         onPreviewOpenChange={setIsImagePreviewOpen}
+                        locale={locale}
                     />
                     {selectedProject.url && (
                         <a
@@ -323,24 +329,29 @@ function CompaniesCarousel() {
                     </a>
                 </div>
             </DialogContent>
-        </Dialog>
+        </Dialog>,
+        locale,
     );
 }
 
 export default function Welcome() {
+    const { locale } = usePage<{ locale: Locale }>().props;
     const [menuOpen, setMenuOpen] = useState(false);
     const [filter, setFilter] = useState('Todo');
     const visibleProjects = projects.filter(
         (project) => filter === 'Todo' || project.category === filter,
     );
+    const localizedMessage = translateText(message, locale);
+    const whatsappHref = `https://wa.me/523221974630?text=${encodeURIComponent(localizedMessage)}`;
+    const emailHref = `mailto:pixelperfect.nacif@gmail.com?subject=${encodeURIComponent(translateText('Tengo un proyecto en mente', locale))}&body=${encodeURIComponent(localizedMessage)}`;
 
-    return (
+    return localizeContent(
         <>
             <SeoHead />
             <Head>
                 <meta name="theme-color" content="#f8f6f2" />
             </Head>
-            <div className="pp-site" id="inicio" lang="es">
+            <div className="pp-site" id="inicio" lang={locale}>
                 <a className="pp-skip" href="#contenido">
                     Saltar al contenido
                 </a>
@@ -374,6 +385,7 @@ export default function Welcome() {
                     >
                         Contacto <ArrowUpRight size={16} aria-hidden="true" />
                     </a>
+                    <LocaleSwitcher locale={locale} />
                     <Button
                         variant="ghost"
                         size="icon"
@@ -474,7 +486,10 @@ export default function Welcome() {
                                     <Sparkles size={18} aria-hidden="true" />
                                 </div>
                                 <div className="pp-hero-stack">
-                                    <PortfolioPreview variant="platform" />
+                                    <PortfolioPreview
+                                        variant="platform"
+                                        locale={locale}
+                                    />
                                 </div>
                                 <div className="pp-floating-note">
                                     <span className="pp-note-check">
@@ -732,6 +747,7 @@ export default function Welcome() {
                                                 >
                                                     <ProjectCover
                                                         project={project}
+                                                        locale={locale}
                                                     />
                                                     <span className="pp-project-open">
                                                         <ArrowUpRight
@@ -789,6 +805,7 @@ export default function Welcome() {
                                                     </DialogDescription>
                                                     <ProjectGallery
                                                         project={project}
+                                                        locale={locale}
                                                     />
                                                     <p className="text-sm leading-6 text-[#6d6475]">
                                                         {project.note}
@@ -850,12 +867,12 @@ export default function Welcome() {
                                 y un negocio que quiere llegar más lejos.
                             </p>
                         </div>
-                        <CompaniesCarousel />
+                        <CompaniesCarousel locale={locale} />
                     </section>
                     <section className="pp-contact" id="contacto">
                         <div className="pp-container">
                             <p className="pp-eyebrow">
-                                04 / Hagamos que suceda
+                                03 / Hagamos que suceda
                             </p>
                             <div className="pp-contact-content">
                                 <div>
@@ -900,8 +917,9 @@ export default function Welcome() {
                         </div>
                     </section>
                 </main>
-                <SiteFooter />
+                <SiteFooter locale={locale} />
             </div>
-        </>
+        </>,
+        locale,
     );
 }

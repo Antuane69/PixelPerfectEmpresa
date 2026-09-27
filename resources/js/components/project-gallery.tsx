@@ -3,9 +3,11 @@ import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import type { CSSProperties, MouseEventHandler } from 'react';
 import { ProjectCover } from '@/components/project-cover';
 import type { PortfolioProject } from '@/lib/portfolio';
+import { localizeContent, type Locale } from '@/lib/localization';
 
 type ProjectGalleryArrowProps = {
     direction: 'previous' | 'next';
+    locale: Locale;
     className?: string;
     style?: CSSProperties;
     onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -13,13 +15,14 @@ type ProjectGalleryArrowProps = {
 
 function ProjectGalleryArrow({
     direction,
+    locale,
     className,
     style,
     onClick,
 }: ProjectGalleryArrowProps) {
     const Icon = direction === 'previous' ? ChevronLeft : ChevronRight;
 
-    return (
+    return localizeContent(
         <button
             type="button"
             className={className}
@@ -32,22 +35,26 @@ function ProjectGalleryArrow({
             }
         >
             <Icon size={21} strokeWidth={2.25} aria-hidden="true" />
-        </button>
+        </button>,
+        locale,
     );
 }
 
 export function ProjectGallery({
     project,
     onPreviewOpenChange,
+    locale = 'es',
 }: {
     project: PortfolioProject;
     onPreviewOpenChange?: (open: boolean) => void;
+    locale?: Locale;
 }) {
     if (!project.images?.length) {
-        return (
+        return localizeContent(
             <div className="pp-project-gallery pp-project-gallery-placeholder">
-                <ProjectCover project={project} />
-            </div>
+                <ProjectCover project={project} locale={locale} />
+            </div>,
+            locale,
         );
     }
 
@@ -55,7 +62,7 @@ export function ProjectGallery({
     const firstImageLabel =
         project.imageType.charAt(0).toUpperCase() + project.imageType.slice(1);
 
-    return (
+    return localizeContent(
         <div
             className="pp-project-gallery"
             role="region"
@@ -82,9 +89,9 @@ export function ProjectGallery({
                     dots={hasMultipleImages}
                     draggable={hasMultipleImages}
                     infinite={hasMultipleImages}
-                    nextArrow={<ProjectGalleryArrow direction="next" />}
+                    nextArrow={<ProjectGalleryArrow direction="next" locale={locale} />}
                     pauseOnHover={false}
-                    prevArrow={<ProjectGalleryArrow direction="previous" />}
+                    prevArrow={<ProjectGalleryArrow direction="previous" locale={locale} />}
                     speed={600}
                 >
                     {project.images.map((image, index) => (
@@ -110,6 +117,7 @@ export function ProjectGallery({
                     ))}
                 </Carousel>
             </Image.PreviewGroup>
-        </div>
+        </div>,
+        locale,
     );
 }

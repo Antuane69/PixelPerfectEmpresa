@@ -53,6 +53,19 @@ class SeoTest extends TestCase
         $this->assertSame($expectedAreas, $schema['@graph'][3]['areaServed']);
     }
 
+    #[TestWith(['/en', 'Custom Website Design and Software in Mexico'])]
+    #[TestWith(['/en/pixel-perfect-empresarial', 'Business Management and Administration System'])]
+    #[TestWith(['/en/plantillas', 'Fast, Affordable Website Templates for Businesses'])]
+    public function test_english_pages_expose_localized_seo_in_initial_html_without_javascript(string $path, string $title): void
+    {
+        $response = $this->get($path.'?utm_source=search');
+
+        $response->assertSee('<title>'.$title.' - PixelPerfect</title>', false)
+            ->assertSee('lang="en"', false)
+            ->assertSee('href="https://pixelperfectmx.com'.$path.'"', false)
+            ->assertSee('property="og:locale" content="en_US"', false);
+    }
+
     #[TestWith(['/', 'welcome', 'Diseño de páginas web y software a la medida en México'])]
     #[TestWith(['/pixel-perfect-empresarial', 'empresarial', 'Sistema de gestión y administración de empresas'])]
     #[TestWith(['/plantillas', 'templates', 'Plantillas web rápidas y accesibles para negocios'])]
@@ -72,6 +85,26 @@ class SeoTest extends TestCase
             ->assertJsonPath('props.seo.meta.og:url', 'https://pixelperfectmx.com'.$path);
     }
 
+    #[TestWith(['/en', 'welcome', 'Custom Website Design and Software in Mexico'])]
+    #[TestWith(['/en/pixel-perfect-empresarial', 'empresarial', 'Business Management and Administration System'])]
+    #[TestWith(['/en/plantillas', 'templates', 'Fast, Affordable Website Templates for Businesses'])]
+    public function test_english_inertia_navigation_receives_localized_metadata(string $path, string $component, string $title): void
+    {
+        $initialPage = $this->get('/en')->viewData('page');
+
+        $this->get($path.'?utm_source=search', [
+            'X-Inertia' => 'true',
+            'X-Inertia-Version' => $initialPage['version'],
+        ])
+            ->assertHeader('X-Inertia', 'true')
+            ->assertJsonPath('component', $component)
+            ->assertJsonPath('props.locale', 'en')
+            ->assertJsonPath('props.seo.title', $title)
+            ->assertJsonPath('props.seo.canonical', 'https://pixelperfectmx.com'.$path)
+            ->assertJsonPath('props.seo.meta.og:locale', 'en_US')
+            ->assertJsonPath('props.seo.meta.og:url', 'https://pixelperfectmx.com'.$path);
+    }
+
     public function test_sitemap_contains_only_canonical_public_pages(): void
     {
         $response = $this->get('/sitemap.xml');
@@ -86,6 +119,9 @@ class SeoTest extends TestCase
             'https://pixelperfectmx.com/',
             'https://pixelperfectmx.com/pixel-perfect-empresarial',
             'https://pixelperfectmx.com/plantillas',
+            'https://pixelperfectmx.com/en',
+            'https://pixelperfectmx.com/en/pixel-perfect-empresarial',
+            'https://pixelperfectmx.com/en/plantillas',
         ], $urls);
     }
 

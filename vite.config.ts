@@ -16,6 +16,15 @@ export default defineConfig({
                 bunny('Instrument Sans', {
                     weights: [400, 500, 600],
                 }),
+                bunny('DM Sans', {
+                    weights: [400, 500, 600],
+                    preload: [{ weight: 400 }, { weight: 600 }],
+                }),
+                bunny('Cormorant Garamond', {
+                    weights: [400, 500, 600],
+                    preload: [{ weight: 500 }],
+                }),
+                bunny('Oooh Baby', { preload: false }),
             ],
         }),
         inertia(),

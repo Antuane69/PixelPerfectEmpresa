@@ -1,3 +1,5 @@
+import { localizeContent, type Locale } from '@/lib/localization';
+
 type SocialNetwork = 'facebook' | 'instagram';
 
 const socialLinks: Array<{
@@ -43,8 +45,8 @@ function SocialIcon({ type }: { type: SocialNetwork }) {
     );
 }
 
-export function SocialRail() {
-    return (
+export function SocialRail({ locale }: { locale: Locale }) {
+    return localizeContent(
         <aside
             className="pp-social-rail"
             aria-label="Síguenos en redes sociales"
@@ -63,6 +65,7 @@ export function SocialRail() {
                     </a>
                 </div>
             ))}
-        </aside>
+        </aside>,
+        locale,
     );
 }

@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import {
     ArrowLeft,
     ArrowRight,
@@ -33,13 +33,17 @@ import { Button } from '@/components/ui/button';
 import { SiteFooter } from '@/components/site-footer';
 import { SeoHead } from '@/components/seo-head';
 import { home } from '@/routes';
+import {
+    LocaleSwitcher,
+    localizeContent,
+    translateText,
+    type Locale,
+} from '@/lib/localization';
 import '../../css/welcome.css';
 import '../../css/empresarial.css';
 
 const demoMessage =
     'Hola, me gustaría conocer Pixel Perfect Empresarial y los módulos disponibles para mi empresa.';
-const demoHref = `https://wa.me/523221974630?text=${encodeURIComponent(demoMessage)}`;
-const demoEmailHref = `mailto:pixelperfect.nacif@gmail.com?subject=${encodeURIComponent('Quiero conocer Pixel Perfect Empresarial')}&body=${encodeURIComponent(demoMessage)}`;
 
 const navigation = [
     ['Módulos', '#modulos'],
@@ -129,8 +133,8 @@ function Wordmark() {
     );
 }
 
-function ProductMark() {
-    return (
+function ProductMark({ locale }: { locale: Locale }) {
+    return localizeContent(
         <span className="ppe-product-mark">
             <span className="ppe-product-symbol" aria-hidden="true">
                 <span />
@@ -142,15 +146,16 @@ function ProductMark() {
                 <strong>Pixel Perfect</strong>
                 <small>Empresarial</small>
             </span>
-        </span>
+        </span>,
+        locale,
     );
 }
 
-function DashboardPreview() {
-    return (
+function DashboardPreview({ locale }: { locale: Locale }) {
+    return localizeContent(
         <div className="ppe-dashboard" aria-label="Vista previa del sistema">
             <div className="ppe-dashboard-topbar">
-                <ProductMark />
+                <ProductMark locale={locale} />
                 <div className="ppe-dashboard-user">
                     <span>
                         <BellRing size={14} aria-hidden="true" />
@@ -260,20 +265,25 @@ function DashboardPreview() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>,
+        locale,
     );
 }
 
 export default function Empresarial() {
+    const { locale } = usePage<{ locale: Locale }>().props;
     const [menuOpen, setMenuOpen] = useState(false);
+    const localizedMessage = translateText(demoMessage, locale);
+    const demoHref = `https://wa.me/523221974630?text=${encodeURIComponent(localizedMessage)}`;
+    const demoEmailHref = `mailto:pixelperfect.nacif@gmail.com?subject=${encodeURIComponent(translateText('Quiero conocer Pixel Perfect Empresarial', locale))}&body=${encodeURIComponent(localizedMessage)}`;
 
-    return (
+    return localizeContent(
         <>
             <SeoHead />
             <Head>
                 <meta name="theme-color" content="#211d29" />
             </Head>
-            <div className="pp-site ppe-site" id="inicio" lang="es">
+            <div className="pp-site ppe-site" id="inicio" lang={locale}>
                 <a className="pp-skip" href="#contenido">
                     Saltar al contenido
                 </a>
@@ -307,6 +317,7 @@ export default function Empresarial() {
                         Solicitar información
                         <ArrowUpRight size={16} aria-hidden="true" />
                     </a>
+                    <LocaleSwitcher locale={locale} />
                     <Button
                         variant="ghost"
                         size="icon"
@@ -354,7 +365,7 @@ export default function Empresarial() {
                         <div className="pp-container ppe-hero-grid">
                             <div className="ppe-hero-copy">
                                 <div className="ppe-product-pill">
-                                    <ProductMark />
+                                    <ProductMark locale={locale} />
                                     <span>Software modular</span>
                                 </div>
                                 <h1>
@@ -413,7 +424,7 @@ export default function Empresarial() {
                                     className="ppe-orbit ppe-orbit-two"
                                     aria-hidden="true"
                                 />
-                                <DashboardPreview />
+                                <DashboardPreview locale={locale} />
                                 <div className="ppe-floating-card ppe-floating-card-left">
                                     <span>
                                         <FileCheck2 size={17} />
@@ -842,7 +853,7 @@ export default function Empresarial() {
 
                     <section className="ppe-final-cta">
                         <div className="pp-container">
-                            <ProductMark />
+                            <ProductMark locale={locale} />
                             <h2>
                                 Menos pendientes dispersos.
                                 <br />
@@ -876,8 +887,9 @@ export default function Empresarial() {
                     </section>
                 </main>
 
-                <SiteFooter />
+                <SiteFooter locale={locale} />
             </div>
-        </>
+        </>,
+        locale,
     );
 }
